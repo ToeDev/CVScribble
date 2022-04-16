@@ -1,0 +1,13 @@
+name: CVScribble
+version: 1.0
+main: org.cubeville.cvscribble.CVScribble
+description: Scribble minigame plugin
+author: FrediW
+depend: [WorldEdit,WorldGuard,CVTools]
+api: 1.16
+
+commands:
+  scribbleclear:
+    description: Clear the scribble board
+    usage: /scribbleclear
+    permission: cvscribble.scribbleclear
