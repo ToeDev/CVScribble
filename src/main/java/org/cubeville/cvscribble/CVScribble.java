@@ -1,9 +1,6 @@
 package org.cubeville.cvscribble;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.Bukkit;
 
@@ -43,66 +40,68 @@ public class CVScribble extends JavaPlugin implements Listener
     @Override
     public void onEnable() {
         List<World> worlds = Bukkit.getServer().getWorlds();
-	world = null;
+	    world = null;
         for(World world: worlds) {
-	    try {
-		BlockUtils.getWGRegion(world, "scribble_board");
-		this.world = world;
-		break;
-	    }
-	    catch(IllegalArgumentException e) {
-	    }
+	        try {
+		        BlockUtils.getWGRegion(world, "scribble_board");
+		        this.world = world;
+		        break;
+            }
+            catch(IllegalArgumentException e) {
+                e.printStackTrace();
+                System.out.println("No \"scribble_board\" region found");
+	        }
         }
 
         if(world == null) {
             throw new RuntimeException("Region scribble_board not found!");
         }
 
-	{
-	    Vector min = BlockUtils.getWGRegionMin(world, "scribble_player");
-	    scribblerMinX = min.getBlockX();
-	    scribblerMinY = min.getBlockY();
-	    scribblerMinZ = min.getBlockZ();
-	}
-	{
-	    Vector max = BlockUtils.getWGRegionMax(world, "scribble_player");
-	    scribblerMaxX = max.getBlockX();
-	    scribblerMaxY = max.getBlockY();
-	    scribblerMaxZ = max.getBlockZ();
-	}
-	        
-        worldId = world.getUID();
+        {
+            Vector min = BlockUtils.getWGRegionMin(world, "scribble_player");
+            scribblerMinX = min.getBlockX();
+            scribblerMinY = min.getBlockY();
+            scribblerMinZ = min.getBlockZ();
+        }
+        {
+            Vector max = BlockUtils.getWGRegionMax(world, "scribble_player");
+            scribblerMaxX = max.getBlockX();
+            scribblerMaxY = max.getBlockY();
+            scribblerMaxZ = max.getBlockZ();
+        }
 
-	{
-	    Vector min = BlockUtils.getWGRegionMin(world, "scribble_board");
-	    regionMinX = min.getBlockX();
-	    regionMinY = min.getBlockY();
-	    regionMinZ = min.getBlockZ();
-	}
-	{
-	    Vector max = BlockUtils.getWGRegionMax(world, "scribble_board");
-	    regionMaxX = max.getBlockX();
-	    regionMaxY = max.getBlockY();
-	    regionMaxZ = max.getBlockZ();
-	}
+            worldId = world.getUID();
 
-	itemmap = new HashMap<>();
-	itemmap.put(Material.WHITE_DYE, Material.WHITE_CONCRETE);
-	itemmap.put(Material.ORANGE_DYE, Material.ORANGE_CONCRETE);
-	itemmap.put(Material.MAGENTA_DYE, Material.MAGENTA_CONCRETE);
-	itemmap.put(Material.LIGHT_BLUE_DYE, Material.LIGHT_BLUE_CONCRETE);
-	itemmap.put(Material.YELLOW_DYE, Material.YELLOW_CONCRETE);
-	itemmap.put(Material.LIME_DYE, Material.LIME_CONCRETE);
-	itemmap.put(Material.PINK_DYE, Material.PINK_CONCRETE);
-	itemmap.put(Material.GRAY_DYE, Material.GRAY_CONCRETE);
-	itemmap.put(Material.LIGHT_GRAY_DYE, Material.LIGHT_GRAY_CONCRETE);
-	itemmap.put(Material.CYAN_DYE, Material.CYAN_CONCRETE);
-	itemmap.put(Material.PURPLE_DYE, Material.PURPLE_CONCRETE);
-	itemmap.put(Material.BLUE_DYE, Material.BLUE_CONCRETE);
-	itemmap.put(Material.BROWN_DYE, Material.BROWN_CONCRETE);
-	itemmap.put(Material.GREEN_DYE, Material.GREEN_CONCRETE);
-	itemmap.put(Material.RED_DYE, Material.RED_CONCRETE);
-	itemmap.put(Material.BLACK_DYE, Material.BLACK_CONCRETE);
+        {
+            Vector min = BlockUtils.getWGRegionMin(world, "scribble_board");
+            regionMinX = min.getBlockX();
+            regionMinY = min.getBlockY();
+            regionMinZ = min.getBlockZ();
+        }
+        {
+            Vector max = BlockUtils.getWGRegionMax(world, "scribble_board");
+            regionMaxX = max.getBlockX();
+            regionMaxY = max.getBlockY();
+            regionMaxZ = max.getBlockZ();
+        }
+
+        itemmap = new HashMap<>();
+        itemmap.put(Material.WHITE_DYE, Material.WHITE_CONCRETE);
+        itemmap.put(Material.ORANGE_DYE, Material.ORANGE_CONCRETE);
+        itemmap.put(Material.MAGENTA_DYE, Material.MAGENTA_CONCRETE);
+        itemmap.put(Material.LIGHT_BLUE_DYE, Material.LIGHT_BLUE_CONCRETE);
+        itemmap.put(Material.YELLOW_DYE, Material.YELLOW_CONCRETE);
+        itemmap.put(Material.LIME_DYE, Material.LIME_CONCRETE);
+        itemmap.put(Material.PINK_DYE, Material.PINK_CONCRETE);
+        itemmap.put(Material.GRAY_DYE, Material.GRAY_CONCRETE);
+        itemmap.put(Material.LIGHT_GRAY_DYE, Material.LIGHT_GRAY_CONCRETE);
+        itemmap.put(Material.CYAN_DYE, Material.CYAN_CONCRETE);
+        itemmap.put(Material.PURPLE_DYE, Material.PURPLE_CONCRETE);
+        itemmap.put(Material.BLUE_DYE, Material.BLUE_CONCRETE);
+        itemmap.put(Material.BROWN_DYE, Material.BROWN_CONCRETE);
+        itemmap.put(Material.GREEN_DYE, Material.GREEN_CONCRETE);
+        itemmap.put(Material.RED_DYE, Material.RED_CONCRETE);
+        itemmap.put(Material.BLACK_DYE, Material.BLACK_CONCRETE);
 	
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
@@ -171,7 +170,7 @@ public class CVScribble extends JavaPlugin implements Listener
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_AIR) return;
-        if(!event.getPlayer().getLocation().getWorld().getUID().equals(worldId)) return;
+        if(!Objects.requireNonNull(event.getPlayer().getLocation().getWorld()).getUID().equals(worldId)) return;
 
         Location loc = event.getPlayer().getLocation();
         if(loc.getBlockX() < scribblerMinX || loc.getBlockX() > scribblerMaxX ||
@@ -186,7 +185,7 @@ public class CVScribble extends JavaPlugin implements Listener
         }
 
         if(!itemmap.containsKey(item.getType())) return;
-	Material paintmat = itemmap.get(item.getType());
+	    Material paintmat = itemmap.get(item.getType());
 
         Block block = event.getPlayer().getTargetBlock(null, 75);
         Location blockLocation = block.getLocation();
