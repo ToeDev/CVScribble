@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.cubeville.commons.utils.BlockUtils;
+import org.cubeville.cvchat.SendLocal;
 
 import java.util.*;
 
@@ -104,6 +105,11 @@ public class CVScribbleListener implements Listener {
         itemMap.put(Material.GREEN_DYE, Material.GREEN_CONCRETE);
         itemMap.put(Material.RED_DYE, Material.RED_CONCRETE);
         itemMap.put(Material.BLACK_DYE, Material.BLACK_CONCRETE);
+    }
+
+    @EventHandler
+    public void onLocalChat(SendLocal event) {
+        System.out.println(event.getPlayer().getName() + ":" + event.getMessage());
     }
 
     @EventHandler
