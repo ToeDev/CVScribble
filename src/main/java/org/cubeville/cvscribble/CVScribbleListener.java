@@ -109,7 +109,7 @@ public class CVScribbleListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_AIR) return;
-        if(!Objects.requireNonNull(event.getPlayer().getLocation().getWorld()).getUID().equals(worldId)) return;
+        if(!event.getPlayer().getWorld().getUID().equals(worldId)) return;
 
         Location loc = event.getPlayer().getLocation();
         if(loc.getBlockX() < scribblerMinX || loc.getBlockX() > scribblerMaxX ||
