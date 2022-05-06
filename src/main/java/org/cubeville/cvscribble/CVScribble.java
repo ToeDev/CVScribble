@@ -20,10 +20,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.cubeville.commons.commands.CommandParser;
-import org.cubeville.cvscribble.commands.CVScribbleAdd;
-import org.cubeville.cvscribble.commands.CVScribbleEdit;
-import org.cubeville.cvscribble.commands.CVScribbleList;
-import org.cubeville.cvscribble.commands.CVScribbleRemove;
+import org.cubeville.commons.utils.BlockUtils;
+import org.cubeville.cvscribble.commands.*;
 
 public class CVScribble extends JavaPlugin implements Listener {
 
@@ -31,6 +29,10 @@ public class CVScribble extends JavaPlugin implements Listener {
     private static CVScribble instance;
     private CVScribbleListener cvScribbleListener;
 
+    private String scribbleBoardRG;
+    private String scribbleArenaRG;
+    private String scribbleDrawingAreaRG;
+    private String scribbleDrawingTeleportPortal;
     private List<String> scribbleList;
 
     private CommandParser commandParser;
@@ -71,6 +73,16 @@ public class CVScribble extends JavaPlugin implements Listener {
         YamlConfiguration mainConfig = new YamlConfiguration();
         try {
             mainConfig.load(configFile);
+
+            scribbleBoardRG = mainConfig.getString("Scribble-Board-Region");
+            logger.log(Level.INFO, "Scribble Board Region set to \"" + scribbleBoardRG + "\"");
+            scribbleArenaRG = mainConfig.getString("Scribble-Arena-Region");
+            logger.log(Level.INFO, "Scribble Arena Region set to \"" + scribbleArenaRG + "\"");
+            scribbleDrawingAreaRG = mainConfig.getString("Scribble-Drawing-Region");
+            logger.log(Level.INFO, "Scribble Arena Region set to \"" + scribbleDrawingAreaRG + "\"");
+            scribbleDrawingTeleportPortal = mainConfig.getString("Scribble-Drawing-Teleport-Portal");
+            logger.log(Level.INFO, "Scribble Drawing Teleport Portal set to \"" + scribbleDrawingTeleportPortal + "\"");
+
             for(String s : mainConfig.getStringList("Scribble-List")) {
                 scribbleList.add(s);
                 logger.log(Level.INFO, "Word/Phrase \"" + s + "\" added from Config file.");
@@ -85,10 +97,28 @@ public class CVScribble extends JavaPlugin implements Listener {
         this.commandParser.addCommand(new CVScribbleAdd());
         this.commandParser.addCommand(new CVScribbleRemove());
 
+        this.commandParser.addCommand(new CVScribbleStart());
+
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
 
         logger.log(Level.INFO, "CVScribble is now enabled");
+    }
+
+    public String getScribbleBoardRG() {
+        return this.scribbleBoardRG;
+    }
+
+    public String getScribbleArenaRG() {
+        return this.scribbleArenaRG;
+    }
+
+    public String getScribbleDrawingAreaRG() {
+        return this.scribbleDrawingAreaRG;
+    }
+
+    public String getScribbleDrawingTeleportPortal() {
+        return this.scribbleDrawingTeleportPortal;
     }
 
     public List<String> getScribbleList() {

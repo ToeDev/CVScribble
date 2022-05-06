@@ -1,2 +1,10 @@
+Scribble-Board-Region: scribble_board
+
+Scribble-Arena-Region: scribble
+
+Scribble-Drawing-Region: scribble_player
+
+Scribble-Drawing-Teleport-Portal: scribble_drawing_lodge
+
 Scribble-List:
   - test
