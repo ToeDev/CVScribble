@@ -19,6 +19,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.cubeville.commons.commands.CommandParser;
@@ -98,20 +99,29 @@ public class CVScribble extends JavaPlugin implements Listener {
 
         if(!CVMenu.getCvMenu().getMenuManager().menuExists("Scribble")) {
             MenuManager menuManager = CVMenu.getCvMenu().getMenuManager();
-            logger.log(Level.WARNING, ChatColor.RED + "Scribble menu not found! Attempting to create now");
+            logger.log(Level.WARNING, ChatColor.YELLOW + "Scribble menu not found! Attempting to create now");
 
             menuManager.createMenu("Scribble", 9);
             MenuContainer menu = menuManager.getMenu("Scribble");
+
             ItemStack book = new ItemStack(Material.BOOK, 1);
-            Objects.requireNonNull(book.getItemMeta()).setDisplayName(ChatColor.GOLD + "List of Words");
+            ItemMeta bookMeta = book.getItemMeta();
+            assert bookMeta != null;
+            bookMeta.setDisplayName(ChatColor.GOLD + "List of Words");
+            book.setItemMeta(bookMeta);
             menu.getInventory().setItem(2, book);
+
             ItemStack string = new ItemStack(Material.STRING, 1);
-            Objects.requireNonNull(string.getItemMeta()).setDisplayName(ChatColor.GOLD + "Freestyle");
+            ItemMeta stringMeta = string.getItemMeta();
+            assert  stringMeta != null;
+            stringMeta.setDisplayName(ChatColor.GOLD + "Freestyle");
+            string.setItemMeta(stringMeta);
             menu.getInventory().setItem(6, string);
 
             //TODO ADD WORD LIST HERE
-            //menu.setClose(6, true);
+            menu.setClose(6, true);
             CVMenu.getCvMenu().saveMenuManager();
+            logger.log(Level.INFO, ChatColor.LIGHT_PURPLE + "Scribble menu created!");
         }
 
         this.commandParser = new CommandParser();
@@ -121,6 +131,7 @@ public class CVScribble extends JavaPlugin implements Listener {
         this.commandParser.addCommand(new CVScribbleRemove());
 
         this.commandParser.addCommand(new CVScribbleStart());
+        this.commandParser.addCommand(new CVScribbleDisplayList());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
