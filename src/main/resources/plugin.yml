@@ -3,7 +3,7 @@ version: 2.0
 main: org.cubeville.cvscribble.CVScribble
 description: Scribble minigame plugin
 author: FrediW,ToeMan_
-depend: [WorldEdit,WorldGuard,CVTools,CVChat,CVPortal]
+depend: [WorldEdit,WorldGuard,CVTools,CVChat,CVPortal,CVMenu]
 api-version: 1.16
 
 commands:

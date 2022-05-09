@@ -12,15 +12,20 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.cubeville.commons.commands.CommandParser;
 import org.cubeville.commons.utils.BlockUtils;
+import org.cubeville.cvmenu.CVMenu;
+import org.cubeville.cvmenu.menu.MenuContainer;
+import org.cubeville.cvmenu.menu.MenuManager;
 import org.cubeville.cvscribble.commands.*;
 
 public class CVScribble extends JavaPlugin implements Listener {
@@ -89,6 +94,24 @@ public class CVScribble extends JavaPlugin implements Listener {
             }
         } catch(IOException | InvalidConfigurationException e) {
             logger.log(Level.WARNING, ChatColor.RED + "Unable to load config file", e);
+        }
+
+        if(!CVMenu.getCvMenu().getMenuManager().menuExists("Scribble")) {
+            MenuManager menuManager = CVMenu.getCvMenu().getMenuManager();
+            logger.log(Level.WARNING, ChatColor.RED + "Scribble menu not found! Attempting to create now");
+
+            menuManager.createMenu("Scribble", 9);
+            MenuContainer menu = menuManager.getMenu("Scribble");
+            ItemStack book = new ItemStack(Material.BOOK, 1);
+            Objects.requireNonNull(book.getItemMeta()).setDisplayName(ChatColor.GOLD + "List of Words");
+            menu.getInventory().setItem(2, book);
+            ItemStack string = new ItemStack(Material.STRING, 1);
+            Objects.requireNonNull(string.getItemMeta()).setDisplayName(ChatColor.GOLD + "Freestyle");
+            menu.getInventory().setItem(6, string);
+
+            //TODO ADD WORD LIST HERE
+            //menu.setClose(6, true);
+            CVMenu.getCvMenu().saveMenuManager();
         }
 
         this.commandParser = new CommandParser();
