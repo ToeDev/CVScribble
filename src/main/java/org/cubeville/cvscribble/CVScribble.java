@@ -131,7 +131,7 @@ public class CVScribble extends JavaPlugin implements Listener {
         this.commandParser.addCommand(new CVScribbleRemove());
 
         this.commandParser.addCommand(new CVScribbleStart());
-        this.commandParser.addCommand(new CVScribbleDisplayList());
+        this.commandParser.addCommand(new CVScribbleListGUI());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);

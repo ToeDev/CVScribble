@@ -35,11 +35,11 @@ public class CVScribbleList extends BaseCommand {
                 w.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/scribble edit \"" + word + "\" "));
                 w.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Edit " + word).create()));
                 i--;
-                if (i >= 1) w.addExtra(" §c|| ");
+                if(i >= 1) w.addExtra(" §c|| ");
                 list.addExtra(w);
             }
             out.add(list);
-            for (TextComponent o : out) {
+            for(TextComponent o : out) {
                 sender.spigot().sendMessage(o);
             }
         } else {

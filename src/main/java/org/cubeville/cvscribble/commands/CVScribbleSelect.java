@@ -13,20 +13,22 @@ import org.cubeville.commons.commands.CommandResponse;
 import org.cubeville.commons.utils.BlockUtils;
 import org.cubeville.commons.utils.PlayerUtils;
 import org.cubeville.cvscribble.CVScribble;
+import org.cubeville.cvscribble.Word;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CVScribbleStart extends BaseCommand {
+public class CVScribbleSelect extends BaseCommand {
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
     private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
-    public CVScribbleStart() {
-        super("start");
+    public CVScribbleSelect() {
+        super("select");
         addBaseParameter(new CommandParameterString());
+        addParameter("word", false, new CommandParameterString());
     }
 
     @Override
@@ -37,19 +39,10 @@ public class CVScribbleStart extends BaseCommand {
             return new CommandResponse(red + "The player \"" + gold + baseParameters.get(0) + red + "\" is offline or non-existent!");
         }
         World world = player.getWorld();
-        if(PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).size() > 0) {
-            return new CommandResponse(red + "Someone is currently drawing! Check back later");
+        if(!PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).contains(player)) {
+            return new CommandResponse(red + "You must be in the drawing booth to select a word!");
         }
-        return startDrawing(player);
-    }
-
-    public CommandResponse startDrawing(Player player) {
-
-        ConsoleCommandSender console = Bukkit.getConsoleSender();
-        Bukkit.dispatchCommand(console, "cvportal trigger " + CVScribble.getInstance().getScribbleDrawingTeleportPortal() + " player:" + player.getName() + " force");
-        player.sendTitle("Be courteous", "Don't afk and please take turns", 5, 40, 5);
-        player.sendMessage("Use the left and right mouse buttons to draw. With your inventory, you can change colours, and the sponge erases the board.");
-        Bukkit.dispatchCommand(console, "loadout apply scribble player:" + player.getName());
-        return new CommandResponse(gold + player.getName() + purple + " has started Scribble");
+        Word
+        return new CommandResponse("");
     }
 }
