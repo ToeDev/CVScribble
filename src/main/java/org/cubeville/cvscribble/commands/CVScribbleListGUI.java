@@ -93,13 +93,15 @@ public class CVScribbleListGUI extends BaseCommand {
             paperMeta.setDisplayName(ChatColor.GOLD + word);
             paper.setItemMeta(paperMeta);
             menuManager.getTempMenu("Scribble_" + totalInvs, player).setItem(i, paper);
+            assert player != null;
+            menuManager.getTempMenu("Scribble_" + totalInvs, player).addCommand(i, "cvscribble select player:" + player.getName() + " word:\"" + word + "\"");
+            menuManager.getTempMenu("Scribble_" + totalInvs, player).setClose(i, true);
             i++;
             t--;
             if(t == 0) {
                 MenuContainer menu = menuManager.getTempMenu("Scribble_" + totalInvs, player);
                 if(menuManager.getTempMenu("Scribble_" + (totalInvs - 1), player) != null) {
                     menu.setItem(45, createPlayerHead(previousHead, ChatColor.LIGHT_PURPLE + "Previous"));
-                    assert player != null;
                     menu.addCommand(45, "scribble listgui player:" + player.getName() + " page:" + (totalInvs - 1));
                 }
                 menu.setItem(53, createPlayerHead(exitHead, ChatColor.LIGHT_PURPLE + "Exit"));

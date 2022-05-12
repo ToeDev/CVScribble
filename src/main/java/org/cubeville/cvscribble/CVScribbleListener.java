@@ -1,17 +1,19 @@
 package org.cubeville.cvscribble;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.cubeville.commons.utils.BlockUtils;
+import org.cubeville.commons.utils.PlayerUtils;
 import org.cubeville.cvchat.SendLocal;
 
 import java.util.*;
@@ -41,6 +43,10 @@ public class CVScribbleListener implements Listener {
     private final int scribblerMaxZ;
 
     private final Map<Material, Material> itemMap;
+
+    private final ChatColor gold = ChatColor.GOLD;
+    private final ChatColor red = ChatColor.RED;
+    private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
     public CVScribbleListener() {
         List<World> worlds = Bukkit.getServer().getWorlds();
@@ -109,7 +115,30 @@ public class CVScribbleListener implements Listener {
 
     @EventHandler
     public void onLocalChat(SendLocal event) {
-        System.out.println(event.getPlayer().getName() + ":" + event.getMessage());
+        if(CVScribble.getInstance().getCurrentWord() == null) return;
+        if(event.getMessage().equalsIgnoreCase(CVScribble.getInstance().getCurrentWord())) {
+            CVScribble.getInstance().setCurrentWord(null);
+            String currentWord = event.getMessage();
+            String pName = event.getPlayer().getName();
+            World pWorld = event.getPlayer().getWorld();
+            String scribbleArena = CVScribble.getInstance().getScribbleArenaRG();
+            sendTitle(purple + "Congratulations " + gold + pName, purple + "The word/phrase was " + gold + currentWord, pWorld, scribbleArena);
+            sendMessage(purple + "The word/phrase was " + gold + currentWord + purple + "! Congratulations " + gold + pName, pWorld, scribbleArena);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "cvportal trigger " + CVScribble.getInstance().getScribbleDrawingPortalExit());
+        }
+    }
+
+    @EventHandler
+    public void onPlayerLogout(PlayerQuitEvent event) {
+        String r = CVScribble.getInstance().getScribbleDrawingAreaRG();
+        World w = event.getPlayer().getWorld();
+        try {
+            if (PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(w, r), w).contains(event.getPlayer())) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "cvportal logintarget " + event.getPlayer().getUniqueId() + " " + CVScribble.getInstance().getScribbleDrawingPortalExit());
+            }
+        } catch (IllegalArgumentException ignored) {
+
+        }
     }
 
     @EventHandler
@@ -219,6 +248,18 @@ public class CVScribbleListener implements Listener {
             for(int cy = regionMinY; cy <= regionMaxY; cy++) {
                 plot(cx, cy, Material.LIGHT_BLUE_CONCRETE);
             }
+        }
+    }
+
+    public void sendTitle(String title, String subtitle, World pWorld, String region) {
+        for(Player player : PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(pWorld, region), pWorld)) {
+            player.sendTitle(title, subtitle, 5, 30, 5);
+        }
+    }
+
+    public void sendMessage(String message, World pWorld, String region) {
+        for(Player player : PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(pWorld, region), pWorld)) {
+            player.sendMessage(message);
         }
     }
 }

@@ -38,10 +38,17 @@ public class CVScribble extends JavaPlugin implements Listener {
     private String scribbleBoardRG;
     private String scribbleArenaRG;
     private String scribbleDrawingAreaRG;
-    private String scribbleDrawingTeleportPortal;
+    private String scribbleDrawingPortalEnter;
+    private String scribbleDrawingPortalExit;
     private List<String> scribbleList;
 
     private CommandParser commandParser;
+
+    private String currentWord = null;
+
+    private final ChatColor gold = ChatColor.GOLD;
+    private final ChatColor red = ChatColor.RED;
+    private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
     public static CVScribble getInstance() {
         return instance;
@@ -70,8 +77,8 @@ public class CVScribble extends JavaPlugin implements Listener {
                 fileOutputStream.flush();
                 fileOutputStream.close();
             } catch(IOException e) {
-                logger.log(Level.WARNING, ChatColor.RED + "Unable to generate config file", e);
-                throw new RuntimeException(ChatColor.RED + "Unable to generate config file", e);
+                logger.log(Level.WARNING, red + "Unable to generate config file", e);
+                throw new RuntimeException(red + "Unable to generate config file", e);
             }
         }
 
@@ -81,25 +88,24 @@ public class CVScribble extends JavaPlugin implements Listener {
             mainConfig.load(configFile);
 
             scribbleBoardRG = mainConfig.getString("Scribble-Board-Region");
-            logger.log(Level.INFO, "Scribble Board Region set to \"" + scribbleBoardRG + "\"");
+            logger.log(Level.INFO, purple + "Scribble Board Region set to \"" + gold + scribbleBoardRG + purple + "\"");
             scribbleArenaRG = mainConfig.getString("Scribble-Arena-Region");
-            logger.log(Level.INFO, "Scribble Arena Region set to \"" + scribbleArenaRG + "\"");
+            logger.log(Level.INFO, purple + "Scribble Arena Region set to \"" + gold + scribbleArenaRG + purple + "\"");
             scribbleDrawingAreaRG = mainConfig.getString("Scribble-Drawing-Region");
-            logger.log(Level.INFO, "Scribble Arena Region set to \"" + scribbleDrawingAreaRG + "\"");
-            scribbleDrawingTeleportPortal = mainConfig.getString("Scribble-Drawing-Teleport-Portal");
-            logger.log(Level.INFO, "Scribble Drawing Teleport Portal set to \"" + scribbleDrawingTeleportPortal + "\"");
+            logger.log(Level.INFO, purple + "Scribble Arena Region set to \"" + gold + scribbleDrawingAreaRG + purple + "\"");
+            scribbleDrawingPortalEnter = mainConfig.getString("Scribble-Drawing-Portal-Enter");
+            logger.log(Level.INFO, purple + "Scribble Drawing Start Portal set to \"" + gold + scribbleDrawingPortalEnter + purple + "\"");
+            scribbleDrawingPortalExit = mainConfig.getString("Scribble-Drawing-Portal-Exit");
+            logger.log(Level.INFO, purple + "Scribble Drawing Exit Portal set to \"" + gold + scribbleDrawingPortalExit + purple + "\"");
 
-            for(String s : mainConfig.getStringList("Scribble-List")) {
-                scribbleList.add(s);
-                logger.log(Level.INFO, "Word/Phrase \"" + s + "\" added from Config file.");
-            }
+            scribbleList.addAll(mainConfig.getStringList("Scribble-List"));
         } catch(IOException | InvalidConfigurationException e) {
-            logger.log(Level.WARNING, ChatColor.RED + "Unable to load config file", e);
+            logger.log(Level.WARNING, red + "Unable to load config file", e);
         }
 
         if(!CVMenu.getCvMenu().getMenuManager().menuExists("Scribble")) {
             MenuManager menuManager = CVMenu.getCvMenu().getMenuManager();
-            logger.log(Level.WARNING, ChatColor.YELLOW + "Scribble menu not found! Attempting to create now");
+            logger.log(Level.WARNING, purple + "Scribble menu not found! Attempting to create now");
 
             menuManager.createMenu("Scribble", 9);
             MenuContainer menu = menuManager.getMenu("Scribble");
@@ -107,21 +113,21 @@ public class CVScribble extends JavaPlugin implements Listener {
             ItemStack book = new ItemStack(Material.BOOK, 1);
             ItemMeta bookMeta = book.getItemMeta();
             assert bookMeta != null;
-            bookMeta.setDisplayName(ChatColor.GOLD + "List of Words");
+            bookMeta.setDisplayName(gold + "List of Words");
             book.setItemMeta(bookMeta);
             menu.getInventory().setItem(2, book);
 
             ItemStack string = new ItemStack(Material.STRING, 1);
             ItemMeta stringMeta = string.getItemMeta();
             assert  stringMeta != null;
-            stringMeta.setDisplayName(ChatColor.GOLD + "Freestyle");
+            stringMeta.setDisplayName(gold + "Freestyle");
             string.setItemMeta(stringMeta);
             menu.getInventory().setItem(6, string);
 
             //TODO ADD WORD LIST HERE
             menu.setClose(6, true);
             CVMenu.getCvMenu().saveMenuManager();
-            logger.log(Level.INFO, ChatColor.LIGHT_PURPLE + "Scribble menu created!");
+            logger.log(Level.INFO, purple + "Scribble menu created!");
         }
 
         this.commandParser = new CommandParser();
@@ -132,11 +138,20 @@ public class CVScribble extends JavaPlugin implements Listener {
 
         this.commandParser.addCommand(new CVScribbleStart());
         this.commandParser.addCommand(new CVScribbleListGUI());
+        this.commandParser.addCommand(new CVScribbleSelect());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
 
-        logger.log(Level.INFO, "CVScribble is now enabled");
+        logger.log(Level.INFO, purple + "CVScribble is now enabled");
+    }
+
+    public String getCurrentWord() {
+        return this.currentWord;
+    }
+
+    public void setCurrentWord(String newWord) {
+        this.currentWord = newWord;
     }
 
     public String getScribbleBoardRG() {
@@ -151,8 +166,12 @@ public class CVScribble extends JavaPlugin implements Listener {
         return this.scribbleDrawingAreaRG;
     }
 
-    public String getScribbleDrawingTeleportPortal() {
-        return this.scribbleDrawingTeleportPortal;
+    public String getScribbleDrawingPortalEnter() {
+        return this.scribbleDrawingPortalEnter;
+    }
+
+    public String getScribbleDrawingPortalExit() {
+        return this.scribbleDrawingPortalExit;
     }
 
     public List<String> getScribbleList() {

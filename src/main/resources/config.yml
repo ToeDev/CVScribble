@@ -4,7 +4,9 @@ Scribble-Arena-Region: 'scribble'
 
 Scribble-Drawing-Region: 'scribble_player'
 
-Scribble-Drawing-Teleport-Portal: 'scribble_drawing_lodge'
+Scribble-Drawing-Portal-Enter: 'scribble_drawing_lodge'
+
+Scribble-Drawing-Portal-Exit: 'scribble_forceexit_lodge'
 
 Scribble-List:
   - test

@@ -46,10 +46,11 @@ public class CVScribbleStart extends BaseCommand {
     public CommandResponse startDrawing(Player player) {
 
         ConsoleCommandSender console = Bukkit.getConsoleSender();
-        Bukkit.dispatchCommand(console, "cvportal trigger " + CVScribble.getInstance().getScribbleDrawingTeleportPortal() + " player:" + player.getName() + " force");
+        Bukkit.dispatchCommand(console, "cvportal trigger " + CVScribble.getInstance().getScribbleDrawingPortalEnter() + " player:" + player.getName() + " force");
         player.sendTitle("Be courteous", "Don't afk and please take turns", 5, 40, 5);
         player.sendMessage("Use the left and right mouse buttons to draw. With your inventory, you can change colours, and the sponge erases the board.");
         Bukkit.dispatchCommand(console, "loadout apply scribble player:" + player.getName());
+        Bukkit.dispatchCommand(console, "cvscribble listgui player:" + player.getName());
         return new CommandResponse(gold + player.getName() + purple + " has started Scribble");
     }
 }
