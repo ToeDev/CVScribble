@@ -136,7 +136,7 @@ public class CVScribbleListener implements Listener {
             if (PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(w, r), w).contains(event.getPlayer())) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "cvportal logintarget " + event.getPlayer().getUniqueId() + " " + CVScribble.getInstance().getScribbleDrawingPortalExit());
             }
-        } catch (IllegalArgumentException ignored) {
+        } catch (IllegalArgumentException | NullPointerException ignored) {
 
         }
     }

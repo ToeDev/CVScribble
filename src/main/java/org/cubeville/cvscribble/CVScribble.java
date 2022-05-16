@@ -182,11 +182,12 @@ public class CVScribble extends JavaPlugin implements Listener {
         final File dataDir = getDataFolder();
         File configFile = new File(dataDir, "config.yml");
         YamlConfiguration config = new YamlConfiguration();
-        config.set("Scribble-List", scribbleList);
         try {
+            config.load(configFile);
+            config.set("Scribble-List", scribbleList);
             config.save(configFile);
         }
-        catch (IOException e) {
+        catch (IOException | InvalidConfigurationException e) {
             logger.log(Level.WARNING, "Unable to save config file!", e);
         }
     }
