@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ public class CVScribble extends JavaPlugin {
     private String scribbleDrawingAreaRG;
     private String scribbleDrawingPortalEnter;
     private String scribbleDrawingPortalExit;
-    private java.util.List<String> scribbleList;
+    private List<String> scribbleList;
 
     private CommandParser commandParser;
 
@@ -138,17 +139,17 @@ public class CVScribble extends JavaPlugin {
         }
 
         this.commandParser = new CommandParser();
-        this.commandParser.addCommand(new List());
-        this.commandParser.addCommand(new Edit());
-        this.commandParser.addCommand(new Add());
-        this.commandParser.addCommand(new Remove());
+        this.commandParser.addCommand(new CVScribbleList());
+        this.commandParser.addCommand(new CVScribbleEdit());
+        this.commandParser.addCommand(new CVScribbleAdd());
+        this.commandParser.addCommand(new CVScribbleRemove());
 
-        this.commandParser.addCommand(new Start());
-        this.commandParser.addCommand(new ListGUI());
-        this.commandParser.addCommand(new Select());
-        this.commandParser.addCommand(new CustomSelect());
-        this.commandParser.addCommand(new SendSuggestion());
-        this.commandParser.addCommand(new Host());
+        this.commandParser.addCommand(new CVScribbleStart());
+        this.commandParser.addCommand(new CVScribbleListGUI());
+        this.commandParser.addCommand(new CVScribbleSelect());
+        this.commandParser.addCommand(new CVScribbleCustomSelect());
+        this.commandParser.addCommand(new CVScribbleSendSuggestion());
+        this.commandParser.addCommand(new CVScribbleHost());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
@@ -192,7 +193,7 @@ public class CVScribble extends JavaPlugin {
         return this.scribbleDrawingPortalExit;
     }
 
-    public java.util.List<String> getScribbleList() {
+    public List<String> getScribbleList() {
         return this.scribbleList;
     }
 

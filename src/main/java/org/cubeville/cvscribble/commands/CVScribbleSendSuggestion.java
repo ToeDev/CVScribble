@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SendSuggestion extends BaseCommand {
+public class CVScribbleSendSuggestion extends BaseCommand {
 
-    public SendSuggestion() {
+    public CVScribbleSendSuggestion() {
         super("sendsuggestion");
         addParameter("suggestion", false, new CommandParameterString());
         addParameter("player", true, new CommandParameterString());

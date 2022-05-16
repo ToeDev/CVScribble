@@ -10,13 +10,13 @@ import org.cubeville.cvscribble.CVScribble;
 
 import java.util.*;
 
-public class Edit extends Command {
+public class CVScribbleEdit extends Command {
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
     private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
-    public Edit() {
+    public CVScribbleEdit() {
         super("edit");
         addBaseParameter(new CommandParameterString());
         addBaseParameter(new CommandParameterString());

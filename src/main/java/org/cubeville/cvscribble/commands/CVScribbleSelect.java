@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Select extends BaseCommand {
+public class CVScribbleSelect extends BaseCommand {
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
     private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
-    public Select() {
+    public CVScribbleSelect() {
         super("select");
         addParameter("player", true, new CommandParameterString());
         addParameter("word", false, new CommandParameterString());

@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Add extends Command {
+public class CVScribbleAdd extends Command {
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
     private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
-    public Add() {
+    public CVScribbleAdd() {
         super("add");
         addBaseParameter(new CommandParameterString());
     }
