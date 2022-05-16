@@ -17,16 +17,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CVScribbleSelect extends BaseCommand {
+public class CustomSelect extends BaseCommand {
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
     private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
-    public CVScribbleSelect() {
-        super("select");
+    public CustomSelect() {
+        super("custom");
+        addBaseParameter(new CommandParameterString());
+        addOptionalBaseParameter(new CommandParameterString());
+        addOptionalBaseParameter(new CommandParameterString());
         addParameter("player", true, new CommandParameterString());
-        addParameter("word", false, new CommandParameterString());
     }
 
     @Override
@@ -49,8 +51,11 @@ public class CVScribbleSelect extends BaseCommand {
         if(!PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).contains(player)) {
             return new CommandResponse(red + player.getName() + " must be in the drawing booth to select a word!");
         }
-        CVScribble.getInstance().setCurrentWord((String) parameters.get("word"));
-        player.sendMessage(purple + "The word/phrase \"" + gold + parameters.get("word") + purple + "\" was set as the current Scribble word");
+        String newWord = baseParameters.get(0).toString();
+        if(baseParameters.size() > 1) newWord = newWord.concat(" " + baseParameters.get(1).toString());
+        if(baseParameters.size() > 2) newWord = newWord.concat(" " + baseParameters.get(2).toString());
+        CVScribble.getInstance().setCurrentWord(newWord);
+        player.sendMessage(purple + "The word/phrase \"" + gold + newWord + purple + "\" was set as the current Scribble word");
         return new CommandResponse("");
     }
 }

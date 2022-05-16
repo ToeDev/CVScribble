@@ -139,17 +139,17 @@ public class CVScribble extends JavaPlugin {
         }
 
         this.commandParser = new CommandParser();
-        this.commandParser.addCommand(new CVScribbleList());
-        this.commandParser.addCommand(new CVScribbleEdit());
-        this.commandParser.addCommand(new CVScribbleAdd());
-        this.commandParser.addCommand(new CVScribbleRemove());
+        this.commandParser.addCommand(new ListWord());
+        this.commandParser.addCommand(new EditWord());
+        this.commandParser.addCommand(new AddWord());
+        this.commandParser.addCommand(new RemoveWord());
 
-        this.commandParser.addCommand(new CVScribbleStart());
-        this.commandParser.addCommand(new CVScribbleListGUI());
-        this.commandParser.addCommand(new CVScribbleSelect());
-        this.commandParser.addCommand(new CVScribbleCustomSelect());
-        this.commandParser.addCommand(new CVScribbleSendSuggestion());
-        this.commandParser.addCommand(new CVScribbleHost());
+        this.commandParser.addCommand(new StartGame());
+        this.commandParser.addCommand(new ListWordGUI());
+        this.commandParser.addCommand(new SelectWord());
+        this.commandParser.addCommand(new CustomSelect());
+        this.commandParser.addCommand(new SendSuggestion());
+        this.commandParser.addCommand(new HostMode());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);

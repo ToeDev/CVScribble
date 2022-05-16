@@ -14,9 +14,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.*;
 
-public class CVScribbleList extends BaseCommand {
+public class ListWord extends BaseCommand {
 
-    public CVScribbleList() {
+    public ListWord() {
         super("list");
         addParameter("player", true, new CommandParameterString());
         addParameter("game", true, new CommandParameterBoolean());
