@@ -142,7 +142,7 @@ public class CVScribble extends JavaPlugin {
         this.commandParser.addCommand(new CVScribbleList());
         this.commandParser.addCommand(new CVScribbleEdit());
         this.commandParser.addCommand(new CVScribbleAdd());
-        this.commandParser.addCommand(new CVScribbleRemove());
+        this.commandParser.addCommand(new Remove());
 
         this.commandParser.addCommand(new Start());
         this.commandParser.addCommand(new CVScribbleListGUI());
