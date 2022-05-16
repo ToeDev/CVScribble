@@ -14,19 +14,19 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.*;
 
-public class CVScribbleList extends BaseCommand {
+public class List extends BaseCommand {
 
-    public CVScribbleList() {
+    public List() {
         super("list");
         addParameter("player", true, new CommandParameterString());
         addParameter("game", true, new CommandParameterBoolean());
     }
 
     @Override
-    public CommandResponse execute(CommandSender sender, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
+    public CommandResponse execute(CommandSender sender, Set<String> flags, Map<String, Object> parameters, java.util.List<Object> baseParameters) throws CommandExecutionException {
 
         Player player;
-        List<String> words = CVScribble.getInstance().getScribbleList();
+        java.util.List<String> words = CVScribble.getInstance().getScribbleList();
         Collections.sort(words);
         if(parameters.containsKey("player")) {
             if(Bukkit.getPlayer((String) parameters.get("player")) == null) {
@@ -35,7 +35,7 @@ public class CVScribbleList extends BaseCommand {
             player = Bukkit.getPlayer((String) parameters.get("player"));
         } else {
             if(!(sender instanceof Player)) {
-                List<String> out = new ArrayList<>();
+                java.util.List<String> out = new ArrayList<>();
                 out.add("§6===================§aWords/Phrases§6===================");
                 String list = "";
                 int i = words.size();
@@ -52,7 +52,7 @@ public class CVScribbleList extends BaseCommand {
             }
             player = (Player) sender;
         }
-        List<TextComponent> out = new ArrayList<>();
+        java.util.List<TextComponent> out = new ArrayList<>();
         out.add(new TextComponent("§6===================§aWords/Phrases§6==================="));
         TextComponent list = new TextComponent("");
         int i = words.size();

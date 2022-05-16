@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +37,7 @@ public class CVScribble extends JavaPlugin {
     private String scribbleDrawingAreaRG;
     private String scribbleDrawingPortalEnter;
     private String scribbleDrawingPortalExit;
-    private List<String> scribbleList;
+    private java.util.List<String> scribbleList;
 
     private CommandParser commandParser;
 
@@ -139,7 +138,7 @@ public class CVScribble extends JavaPlugin {
         }
 
         this.commandParser = new CommandParser();
-        this.commandParser.addCommand(new CVScribbleList());
+        this.commandParser.addCommand(new List());
         this.commandParser.addCommand(new CVScribbleEdit());
         this.commandParser.addCommand(new CVScribbleAdd());
         this.commandParser.addCommand(new Remove());
@@ -193,7 +192,7 @@ public class CVScribble extends JavaPlugin {
         return this.scribbleDrawingPortalExit;
     }
 
-    public List<String> getScribbleList() {
+    public java.util.List<String> getScribbleList() {
         return this.scribbleList;
     }
 
