@@ -117,6 +117,13 @@ public class CVScribble extends JavaPlugin implements Listener {
             book.setItemMeta(bookMeta);
             menu.getInventory().setItem(2, book);
 
+            ItemStack feather = new ItemStack(Material.FEATHER, 1);
+            ItemMeta featherMeta = feather.getItemMeta();
+            assert featherMeta != null;
+            featherMeta.setDisplayName(gold + "Enter Custom Word/Phrase");
+            feather.setItemMeta(featherMeta);
+            menu.getInventory().setItem(4, feather);
+
             ItemStack string = new ItemStack(Material.STRING, 1);
             ItemMeta stringMeta = string.getItemMeta();
             assert  stringMeta != null;
@@ -124,7 +131,9 @@ public class CVScribble extends JavaPlugin implements Listener {
             string.setItemMeta(stringMeta);
             menu.getInventory().setItem(6, string);
 
-            //TODO ADD WORD LIST HERE
+            menu.addCommand(2, "cvscribble listgui player:%player%");
+            menu.addCommand(4, "cvscribble sendsuggestion player:%player% suggestion:\"/scribble custom \"");
+            menu.setClose(4, true);
             menu.setClose(6, true);
             CVMenu.getCvMenu().saveMenuManager();
             logger.log(Level.INFO, purple + "Scribble menu created!");
@@ -140,6 +149,8 @@ public class CVScribble extends JavaPlugin implements Listener {
         this.commandParser.addCommand(new CVScribbleListGUI());
         this.commandParser.addCommand(new CVScribbleSelect());
         this.commandParser.addCommand(new CVScribbleCustomSelect());
+
+        this.commandParser.addCommand(new CVScribbleSendSuggestion());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);

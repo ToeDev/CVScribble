@@ -50,7 +50,7 @@ public class CVScribbleStart extends BaseCommand {
         player.sendTitle("Be courteous", "Don't afk and please take turns", 5, 40, 5);
         player.sendMessage("Use the left and right mouse buttons to draw. With your inventory, you can change colours, and the sponge erases the board.");
         Bukkit.dispatchCommand(console, "loadout apply scribble player:" + player.getName());
-        Bukkit.dispatchCommand(console, "cvscribble listgui player:" + player.getName());
+        Bukkit.dispatchCommand(console, "menu display scribble player:" + player.getName());
         return new CommandResponse(gold + player.getName() + purple + " has started Scribble");
     }
 }
