@@ -17,7 +17,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,7 +27,7 @@ import org.cubeville.cvmenu.menu.MenuContainer;
 import org.cubeville.cvmenu.menu.MenuManager;
 import org.cubeville.cvscribble.commands.*;
 
-public class CVScribble extends JavaPlugin implements Listener {
+public class CVScribble extends JavaPlugin {
 
     private Logger logger;
     private static CVScribble instance;
