@@ -24,6 +24,7 @@ public class CVScribbleListGUI extends BaseCommand {
 
     private final String previousHead;
     private final String nextHead;
+    private final String listHead;
     private final String exitHead;
 
     public CVScribbleListGUI() {
@@ -33,6 +34,7 @@ public class CVScribbleListGUI extends BaseCommand {
 
         previousHead = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWVkNzg4MjI1NzYzMTdiMDQ4ZWVhOTIyMjdjZDg1ZjdhZmNjNDQxNDhkY2I4MzI3MzNiYWNjYjhlYjU2ZmExIn19fQ==";
         nextHead = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzE1NDQ1ZGExNmZhYjY3ZmNkODI3ZjcxYmFlOWMxZDJmOTBjNzNlYjJjMWJkMWVmOGQ4Mzk2Y2Q4ZTgifX19";
+        listHead = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzkzN2NiMzFjMzdkN2E1ZmNjYzBjNjg1ZTZjOWFhNGU4MTk0M2M4ZDg3YWM0MjFiZmVhZjdjZGNiMDU1YWI0MiJ9fX0=";
         exitHead = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2EyNTRmYzA0NGVmYjg0Y2Q1NzZhNmM4ZjExNDRmODNhY2RiMTQ5OTEyMzIwNjBhYjQ4NjY5MWEwOWIifX19";
     }
 
@@ -71,14 +73,15 @@ public class CVScribbleListGUI extends BaseCommand {
                 MenuContainer menu = menuManager.getTempMenu("Scribble_" + totalInvs, player);
                 if(menuManager.getTempMenu("Scribble_" + (totalInvs - 1), player) != null) {
                     menu.setItem(45, createPlayerHead(previousHead, ChatColor.LIGHT_PURPLE + "Previous"));
-                    assert player != null;
                     menu.addCommand(45, "scribble listgui player:" + player.getName() + " page:" + (totalInvs - 1));
                 }
                 if(t > 0) {
                     menu.setItem(46, createPlayerHead(nextHead, ChatColor.LIGHT_PURPLE + "Next"));
-                    assert player != null;
                     menu.addCommand(46, "scribble listgui player:" + player.getName() + " page:" + (totalInvs + 1));
                 }
+                menu.setItem(49, createPlayerHead(listHead, ChatColor.LIGHT_PURPLE + "List View"));
+                menu.addCommand(49, "scribble list game:true player:" + player.getName());
+                menu.setClose(49, true);
                 menu.setItem(53, createPlayerHead(exitHead, ChatColor.LIGHT_PURPLE + "Exit"));
                 menu.setClose(53, true);
                 i = 0;
@@ -104,6 +107,9 @@ public class CVScribbleListGUI extends BaseCommand {
                     menu.setItem(45, createPlayerHead(previousHead, ChatColor.LIGHT_PURPLE + "Previous"));
                     menu.addCommand(45, "scribble listgui player:" + player.getName() + " page:" + (totalInvs - 1));
                 }
+                menu.setItem(49, createPlayerHead(listHead, ChatColor.LIGHT_PURPLE + "List View"));
+                menu.addCommand(49, "scribble list game:true player:" + player.getName());
+                menu.setClose(49, true);
                 menu.setItem(53, createPlayerHead(exitHead, ChatColor.LIGHT_PURPLE + "Exit"));
                 menu.setClose(53, true);
             }
