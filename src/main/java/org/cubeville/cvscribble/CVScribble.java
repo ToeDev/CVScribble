@@ -23,7 +23,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.cubeville.commons.commands.CommandParser;
-import org.cubeville.commons.utils.BlockUtils;
 import org.cubeville.cvmenu.CVMenu;
 import org.cubeville.cvmenu.menu.MenuContainer;
 import org.cubeville.cvmenu.menu.MenuManager;
