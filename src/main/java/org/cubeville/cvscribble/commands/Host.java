@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CVScribbleHost extends BaseCommand {
+public class Host extends BaseCommand {
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
     private final ChatColor purple = ChatColor.LIGHT_PURPLE;
 
-    public CVScribbleHost() {
+    public Host() {
         super("host");
         addBaseParameter(new CommandParameterBoolean());
     }
