@@ -43,6 +43,7 @@ public class CVScribble extends JavaPlugin {
     private CommandParser commandParser;
 
     private String currentWord = null;
+    private boolean hostedMode = false;
 
     private final ChatColor gold = ChatColor.GOLD;
     private final ChatColor red = ChatColor.RED;
@@ -147,8 +148,8 @@ public class CVScribble extends JavaPlugin {
         this.commandParser.addCommand(new CVScribbleListGUI());
         this.commandParser.addCommand(new CVScribbleSelect());
         this.commandParser.addCommand(new CVScribbleCustomSelect());
-
         this.commandParser.addCommand(new CVScribbleSendSuggestion());
+        this.commandParser.addCommand(new CVScribbleHost());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
@@ -162,6 +163,14 @@ public class CVScribble extends JavaPlugin {
 
     public void setCurrentWord(String newWord) {
         this.currentWord = newWord;
+    }
+
+    public boolean isHostedMode() {
+        return this.hostedMode;
+    }
+
+    public void setHostedMode(boolean status) {
+        this.hostedMode = status;
     }
 
     public String getScribbleBoardRG() {

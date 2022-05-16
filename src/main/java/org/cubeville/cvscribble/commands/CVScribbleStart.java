@@ -38,7 +38,12 @@ public class CVScribbleStart extends BaseCommand {
         }
         World world = player.getWorld();
         if(PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).size() > 0) {
-            return new CommandResponse(red + "Someone is currently drawing! Check back later");
+            player.sendMessage(red + "Someone is currently drawing! Check back later");
+            return new CommandResponse("");
+        }
+        if(CVScribble.getInstance().isHostedMode()) {
+            player.sendMessage(red + "Scribble is currently in hosted mode. If you believe this to be in error, please talk to a staff member or /modreq");
+            return new CommandResponse("");
         }
         return startDrawing(player);
     }
