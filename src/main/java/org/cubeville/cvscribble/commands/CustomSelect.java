@@ -56,6 +56,9 @@ public class CustomSelect extends BaseCommand {
         if(baseParameters.size() > 2) newWord = newWord.concat(" " + baseParameters.get(2).toString());
         CVScribble.getInstance().setCurrentWord(newWord);
         player.sendMessage(purple + "The word/phrase \"" + gold + newWord + purple + "\" was set as the current Scribble word");
+        if(CVScribble.getInstance().isHostedMode()) {
+            return new CommandResponse(purple + "The word/phrase \"" + gold + newWord + purple + "\" was set as the current Scribble word");
+        }
         return new CommandResponse("");
     }
 }

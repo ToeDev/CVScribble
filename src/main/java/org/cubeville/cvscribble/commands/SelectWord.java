@@ -5,10 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.cubeville.commons.commands.BaseCommand;
-import org.cubeville.commons.commands.CommandExecutionException;
-import org.cubeville.commons.commands.CommandParameterString;
-import org.cubeville.commons.commands.CommandResponse;
+import org.cubeville.commons.commands.*;
 import org.cubeville.commons.utils.BlockUtils;
 import org.cubeville.commons.utils.PlayerUtils;
 import org.cubeville.cvscribble.CVScribble;
@@ -51,6 +48,9 @@ public class SelectWord extends BaseCommand {
         }
         CVScribble.getInstance().setCurrentWord((String) parameters.get("word"));
         player.sendMessage(purple + "The word/phrase \"" + gold + parameters.get("word") + purple + "\" was set as the current Scribble word");
+        if(CVScribble.getInstance().isHostedMode()) {
+            return new CommandResponse(purple + "The word/phrase \"" + gold + parameters.get("word") + purple + "\" was set as the current Scribble word");
+        }
         return new CommandResponse("");
     }
 }
