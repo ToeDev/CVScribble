@@ -19,7 +19,7 @@ import org.cubeville.cvscribble.CVScribble;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class CVScribbleListGUI extends BaseCommand {
+public class ListGUI extends BaseCommand {
 
 
     private final String previousHead;
@@ -28,7 +28,7 @@ public class CVScribbleListGUI extends BaseCommand {
     private final String menuHead;
     private final String exitHead;
 
-    public CVScribbleListGUI() {
+    public ListGUI() {
         super("listgui");
         addParameter("player", true, new CommandParameterString());
         addParameter("page", true, new CommandParameterInteger());
