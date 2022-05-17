@@ -102,6 +102,7 @@ public class ListWordGUI extends BaseCommand {
             menuManager.getTempMenu("Scribble_" + totalInvs, player).setItem(i, paper);
             assert player != null;
             menuManager.getTempMenu("Scribble_" + totalInvs, player).addCommand(i, "cvscribble select player:" + player.getName() + " word:\"" + word + "\"");
+            menuManager.getTempMenu("Scribble_" + totalInvs, player).setCmdsRunFromConsole(i, false);
             menuManager.getTempMenu("Scribble_" + totalInvs, player).setClose(i, true);
             i++;
             t--;

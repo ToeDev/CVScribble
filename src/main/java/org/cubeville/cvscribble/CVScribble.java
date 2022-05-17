@@ -138,6 +138,62 @@ public class CVScribble extends JavaPlugin {
             logger.log(Level.INFO, purple + "Scribble menu created!");
         }
 
+        if(!CVMenu.getCvMenu().getMenuManager().menuExists("Scribble_Hosting")) {
+            MenuManager menuManager = CVMenu.getCvMenu().getMenuManager();
+            logger.log(Level.WARNING, purple + "Scribble Hosting menu not found! Attempting to create now");
+
+            menuManager.createMenu("Scribble_Hosting", 9);
+            MenuContainer menu = menuManager.getMenu("Scribble_Hosting");
+
+            ItemStack limeWool = new ItemStack(Material.LIME_WOOL, 1);
+            ItemMeta limeWoolMeta = limeWool.getItemMeta();
+            assert limeWoolMeta != null;
+            limeWoolMeta.setDisplayName(gold + "Enable Hosted Mode (closes portal)");
+            limeWool.setItemMeta(limeWoolMeta);
+            menu.getInventory().setItem(0, limeWool);
+
+            ItemStack redWool = new ItemStack(Material.RED_WOOL, 1);
+            ItemMeta redWoolMeta = redWool.getItemMeta();
+            assert redWoolMeta != null;
+            redWoolMeta.setDisplayName(gold + "Disable Hosted Mode (opens portal)");
+            redWool.setItemMeta(redWoolMeta);
+            menu.getInventory().setItem(1, redWool);
+
+            ItemStack pHead = new ItemStack(Material.PLAYER_HEAD, 1);
+            ItemMeta pHeadMeta = pHead.getItemMeta();
+            assert  pHeadMeta != null;
+            pHeadMeta.setDisplayName(gold + "Send a Player to the Drawing Booth");
+            pHead.setItemMeta(pHeadMeta);
+            menu.getInventory().setItem(4, pHead);
+
+            ItemStack sHead = new ItemStack(Material.SKELETON_SKULL, 1);
+            ItemMeta sHeadMeta = sHead.getItemMeta();
+            assert sHeadMeta != null;
+            sHeadMeta.setDisplayName(gold + "Remove a Player from the Drawing Booth");
+            sHead.setItemMeta(sHeadMeta);
+            menu.getInventory().setItem(5, sHead);
+
+            ItemStack arrow = new ItemStack(Material.ARROW, 1);
+            ItemMeta arrowMeta = arrow.getItemMeta();
+            assert arrowMeta != null;
+            arrowMeta.setDisplayName(gold + "Select a word/phrase");
+            arrow.setItemMeta(arrowMeta);
+            menu.getInventory().setItem(8, arrow);
+
+            menu.addCommand(0, "cvscribble host status true");
+            menu.setCmdsRunFromConsole(0, false);
+            menu.addCommand(1, "cvscribble host status false");
+            menu.setCmdsRunFromConsole(1, false);
+            menu.addCommand(4, "cvscribble hostmenu pagecontent:playerstart");
+            menu.setCmdsRunFromConsole(4, false);
+            menu.addCommand(5, "cvscribble hostmenu pagecontent:playerremove");
+            menu.setCmdsRunFromConsole(5, false);
+            menu.addCommand(8, "cvscribble host select %player%");
+            menu.setCmdsRunFromConsole(8, false);
+            CVMenu.getCvMenu().saveMenuManager();
+            logger.log(Level.INFO, purple + "Scribble Hosting menu created!");
+        }
+
         this.commandParser = new CommandParser();
         this.commandParser.addCommand(new ListWord());
         this.commandParser.addCommand(new EditWord());
@@ -150,6 +206,7 @@ public class CVScribble extends JavaPlugin {
         this.commandParser.addCommand(new CustomSelect());
         this.commandParser.addCommand(new SendSuggestion());
         this.commandParser.addCommand(new HostCommands());
+        this.commandParser.addCommand(new HostMenu());
 
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
