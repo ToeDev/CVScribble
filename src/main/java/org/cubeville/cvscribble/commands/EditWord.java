@@ -30,6 +30,9 @@ public class EditWord extends Command {
         if(!list.contains(baseParameters.get(0).toString().toLowerCase())) {
             return new CommandResponse(red + "The word/phrase \"" + gold + baseParameters.get(0) + red + "\" does not exist!");
         }
+        if(list.contains(baseParameters.get(1).toString().toLowerCase())) {
+            return new CommandResponse(red + "The word/phrase \"" + gold + baseParameters.get(1) + red + "\" already exists!");
+        }
         list.remove(baseParameters.get(0).toString().toLowerCase());
         list.add(baseParameters.get(1).toString().toLowerCase());
         CVScribble.getInstance().saveScribbleList();
