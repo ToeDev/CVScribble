@@ -14,9 +14,15 @@ commands:
 
   cvscribble:
     aliases: scribble
-    permission: cvscribble.admin
+    permission: cvscribble.usage
 
 permissions:
   cvscribble.admin:
     description: Gives player access to every cvscribble command
     default: op
+
+  cvscribble.staff:
+    description: Gives player access to the the hosting commands
+
+  cvscribble.usage:
+    description: Gives player base access to cvscribble command

@@ -39,6 +39,7 @@ public class HostMenu extends BaseCommand {
 
     public HostMenu() {
         super("hostmenu");
+        setPermission("cvscribble.staff");
         addParameter("pagecontent", true, new CommandParameterString());
         addParameter("page", true, new CommandParameterString());
         addParameter("player", true, new CommandParameterString());

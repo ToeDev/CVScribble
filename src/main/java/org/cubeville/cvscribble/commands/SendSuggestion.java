@@ -21,6 +21,7 @@ public class SendSuggestion extends BaseCommand {
 
     public SendSuggestion() {
         super("sendsuggestion");
+        setPermission("cvscribble.admin");
         addParameter("suggestion", false, new CommandParameterString());
         addParameter("player", true, new CommandParameterString());
     }

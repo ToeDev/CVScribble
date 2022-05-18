@@ -22,6 +22,7 @@ public class SelectWord extends BaseCommand {
 
     public SelectWord() {
         super("select");
+        setPermission("cvscribble.admin");
         addParameter("player", true, new CommandParameterString());
         addParameter("word", false, new CommandParameterString());
     }

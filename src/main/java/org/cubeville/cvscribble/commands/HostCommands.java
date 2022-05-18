@@ -23,6 +23,7 @@ public class HostCommands extends BaseCommand {
 
     public HostCommands() {
         super("host");
+        setPermission("cvscribble.staff");
         addBaseParameter(new CommandParameterString());
         addBaseParameter(new CommandParameterString());
     }

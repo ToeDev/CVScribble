@@ -18,6 +18,7 @@ public class EditWord extends Command {
 
     public EditWord() {
         super("edit");
+        setPermission("cvscribble.admin");
         addBaseParameter(new CommandParameterString());
         addBaseParameter(new CommandParameterString());
     }

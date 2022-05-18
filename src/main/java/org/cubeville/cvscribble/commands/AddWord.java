@@ -20,6 +20,7 @@ public class AddWord extends Command {
 
     public AddWord() {
         super("add");
+        setPermission("cvscribble.admin");
         addBaseParameter(new CommandParameterString());
     }
 

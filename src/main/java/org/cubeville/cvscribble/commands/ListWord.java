@@ -18,6 +18,7 @@ public class ListWord extends BaseCommand {
 
     public ListWord() {
         super("list");
+        setPermission("cvscribble.admin");
         addParameter("player", true, new CommandParameterString());
         addParameter("game", true, new CommandParameterBoolean());
     }

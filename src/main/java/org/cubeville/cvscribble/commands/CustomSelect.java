@@ -25,6 +25,7 @@ public class CustomSelect extends BaseCommand {
 
     public CustomSelect() {
         super("custom");
+        setPermission("cvscribble.usage");
         addBaseParameter(new CommandParameterString());
         addOptionalBaseParameter(new CommandParameterString());
         addOptionalBaseParameter(new CommandParameterString());

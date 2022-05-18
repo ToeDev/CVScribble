@@ -26,6 +26,7 @@ public class StartGame extends BaseCommand {
 
     public StartGame() {
         super("start");
+        setPermission("cvscribble.admin");
         addBaseParameter(new CommandParameterString());
     }
 

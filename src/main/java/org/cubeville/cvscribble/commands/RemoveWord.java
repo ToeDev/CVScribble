@@ -20,6 +20,7 @@ public class RemoveWord extends Command {
 
     public RemoveWord() {
         super("remove");
+        setPermission("cvscribble.admin");
         addBaseParameter(new CommandParameterString());
     }
 

@@ -30,6 +30,7 @@ public class ListWordGUI extends BaseCommand {
 
     public ListWordGUI() {
         super("listgui");
+        setPermission("cvscribble.admin");
         addParameter("player", true, new CommandParameterString());
         addParameter("page", true, new CommandParameterInteger());
 
