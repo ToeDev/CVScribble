@@ -12,6 +12,7 @@ import org.cubeville.cvscribble.CVScribble;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class SelectWord extends BaseCommand {
@@ -22,7 +23,7 @@ public class SelectWord extends BaseCommand {
 
     public SelectWord() {
         super("select");
-        setPermission("cvscribble.admin");
+        setPermission("cvscribble.usage");
         addParameter("player", true, new CommandParameterString());
         addParameter("word", false, new CommandParameterString());
     }
@@ -33,9 +34,12 @@ public class SelectWord extends BaseCommand {
         Player player;
         if(parameters.containsKey("player")) {
             if(Bukkit.getPlayer((String) parameters.get("player")) == null) {
-                throw new CommandExecutionException(ChatColor.GOLD + (String) parameters.get("player") + ChatColor.RED + " is not online!");
+                throw new CommandExecutionException(gold + (String) parameters.get("player") + red + " is not online!");
             }
             player = Bukkit.getPlayer((String) parameters.get("player"));
+            if(sender instanceof Player && !Objects.equals(player, sender) && !sender.hasPermission("cvscribble.staff")) {
+                throw new CommandExecutionException(red + "You do not have permission to do that!");
+            }
         } else {
             if(!(sender instanceof Player)) {
                 return new CommandResponse(ChatColor.RED + "You cannot select a word from console!");

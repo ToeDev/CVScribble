@@ -15,6 +15,7 @@ import org.cubeville.cvscribble.CVScribble;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class CustomSelect extends BaseCommand {
@@ -41,6 +42,9 @@ public class CustomSelect extends BaseCommand {
                 throw new CommandExecutionException(ChatColor.GOLD + (String) parameters.get("player") + ChatColor.RED + " is not online!");
             }
             player = Bukkit.getPlayer((String) parameters.get("player"));
+            if(sender instanceof Player && !Objects.equals(player, sender) && !sender.hasPermission("cvscribble.staff")) {
+                throw new CommandExecutionException(red + "You do not have permission to do that!");
+            }
         } else {
             if(!(sender instanceof Player)) {
                 return new CommandResponse(ChatColor.RED + "You cannot select a word from console!");
