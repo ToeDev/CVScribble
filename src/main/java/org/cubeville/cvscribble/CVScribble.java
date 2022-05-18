@@ -208,6 +208,8 @@ public class CVScribble extends JavaPlugin {
         this.commandParser.addCommand(new HostCommands());
         this.commandParser.addCommand(new HostMenu());
 
+        this.commandParser.addCommand(new Help());
+
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
 

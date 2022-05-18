@@ -18,7 +18,7 @@ public class ListWord extends BaseCommand {
 
     public ListWord() {
         super("list");
-        setPermission("cvscribble.admin");
+        setPermission("cvscribble.staff");
         addParameter("player", true, new CommandParameterString());
         addParameter("game", true, new CommandParameterBoolean());
     }
@@ -62,7 +62,7 @@ public class ListWord extends BaseCommand {
             if(parameters.get("game") != null && parameters.get("game").equals(true)) {
                 w.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/scribble select word:\"" + word + "\" player:" +player.getName()));
                 w.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Select " + word).create()));
-            } else {
+            } else if(player.hasPermission("cvscribble.admin")){
                 w.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/scribble edit \"" + word + "\" "));
                 w.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Edit " + word).create()));
             }
