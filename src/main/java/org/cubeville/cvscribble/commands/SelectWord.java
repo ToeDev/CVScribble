@@ -49,6 +49,9 @@ public class SelectWord extends BaseCommand {
         assert player != null;
         World world = player.getWorld();
         if(!PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).contains(player)) {
+            if(CVScribble.getInstance().isHostedMode()) {
+                return new CommandResponse(red + "Someone must be in the drawing booth to select a word!");
+            }
             return new CommandResponse(red + player.getName() + " must be in the drawing booth to select a word!");
         }
         CVScribble.getInstance().setCurrentWord((String) parameters.get("word"));
