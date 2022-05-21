@@ -54,7 +54,7 @@ public class CustomSelect extends BaseCommand {
         assert player != null;
         World world = player.getWorld();
         if(!PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).contains(player)) {
-            return new CommandResponse(red + player.getName() + " must be in the drawing booth to select a word!");
+            return new CommandResponse(red + "Someone must be in the drawing booth to select a word!");
         }
         String newWord = baseParameters.get(0).toString();
         if(baseParameters.size() > 1) newWord = newWord.concat(" " + baseParameters.get(1).toString());
