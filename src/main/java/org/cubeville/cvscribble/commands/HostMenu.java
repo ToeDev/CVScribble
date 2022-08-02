@@ -111,7 +111,7 @@ public class HostMenu extends BaseCommand {
                     menuManager.createTempMenu("Scribble_Start_" + totalInvs, 54, player);
                 }
                 menuManager.getTempMenu("Scribble_Start_" + totalInvs, player).setItem(i, createStartPlayerHead(bPlayer));
-                menuManager.getTempMenu("Scribble_Start_" + totalInvs, player).addCommand(i, "cvscribble host start " + player.getName());
+                menuManager.getTempMenu("Scribble_Start_" + totalInvs, player).addCommand(i, "cvscribble host start " + bPlayer.getName());
                 menuManager.getTempMenu("Scribble_Start_" + totalInvs, player).setCmdsRunFromConsole(i, false);
                 menuManager.getTempMenu("Scribble_Start_" + totalInvs, player).setClose(i, false);
                 i++;
@@ -171,7 +171,7 @@ public class HostMenu extends BaseCommand {
                     menuManager.createTempMenu("Scribble_Remove_" + totalInvs, 54, player);
                 }
                 menuManager.getTempMenu("Scribble_Remove_" + totalInvs, player).setItem(i, createRemovePlayerHead(bPlayer));
-                menuManager.getTempMenu("Scribble_Remove_" + totalInvs, player).addCommand(i, "cvscribble host remove " + player.getName());
+                menuManager.getTempMenu("Scribble_Remove_" + totalInvs, player).addCommand(i, "cvscribble host remove " + bPlayer.getName());
                 menuManager.getTempMenu("Scribble_Remove_" + totalInvs, player).setCmdsRunFromConsole(i, false);
                 menuManager.getTempMenu("Scribble_Remove_" + totalInvs, player).setClose(i, false);
                 i++;
