@@ -213,6 +213,9 @@ public class CVScribble extends JavaPlugin {
         cvScribbleListener = new CVScribbleListener();
         Bukkit.getPluginManager().registerEvents(cvScribbleListener, this);
 
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "menu removecommand scribble slot:4");
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "menu addcommand scribble slot:4 command:\"cvscribble sendsuggestion player:%player% suggestion:\"/scribble custom \"\"");
+
         logger.log(Level.INFO, purple + "CVScribble is now enabled");
     }
 
@@ -229,6 +232,13 @@ public class CVScribble extends JavaPlugin {
     }
 
     public void setHostedMode(boolean status) {
+        if(status) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "menu removecommand scribble slot:4");
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "menu addcommand scribble slot:4 command:\"cvscribble sendsuggestion player:%player% suggestion:\"/scribble custom hosted:true \"\"");
+        } else {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "menu removecommand scribble slot:4");
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "menu addcommand scribble slot:4 command:\"cvscribble sendsuggestion player:%player% suggestion:\"/scribble custom \"\"");
+        }
         this.hostedMode = status;
     }
 

@@ -5,10 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.cubeville.commons.commands.BaseCommand;
-import org.cubeville.commons.commands.CommandExecutionException;
-import org.cubeville.commons.commands.CommandParameterString;
-import org.cubeville.commons.commands.CommandResponse;
+import org.cubeville.commons.commands.*;
 import org.cubeville.commons.utils.BlockUtils;
 import org.cubeville.commons.utils.PlayerUtils;
 import org.cubeville.cvscribble.CVScribble;
@@ -31,11 +28,15 @@ public class CustomSelect extends BaseCommand {
         addOptionalBaseParameter(new CommandParameterString());
         addOptionalBaseParameter(new CommandParameterString());
         addParameter("player", true, new CommandParameterString());
+        addParameter("hosted", true, new CommandParameterBoolean());
     }
 
     @Override
     public CommandResponse execute(CommandSender sender, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
 
+        if(!(sender instanceof Player)) {
+            return new CommandResponse(ChatColor.RED + "You cannot select a word from console!");
+        }
         Player player;
         if(parameters.containsKey("player")) {
             if(Bukkit.getPlayer((String) parameters.get("player")) == null) {
@@ -45,10 +46,10 @@ public class CustomSelect extends BaseCommand {
             if(sender instanceof Player && !Objects.equals(player, sender) && !sender.hasPermission("cvscribble.staff")) {
                 throw new CommandExecutionException(red + "You do not have permission to do that!");
             }
+        } else if(parameters.containsKey("hosted") && (Boolean) parameters.get("hosted")) {
+            World world = ((Player) sender).getWorld();
+            player = PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).get(0);
         } else {
-            if(!(sender instanceof Player)) {
-                return new CommandResponse(ChatColor.RED + "You cannot select a word from console!");
-            }
             player = (Player) sender;
         }
         assert player != null;

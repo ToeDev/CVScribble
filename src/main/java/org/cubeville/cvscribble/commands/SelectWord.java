@@ -26,11 +26,15 @@ public class SelectWord extends BaseCommand {
         setPermission("cvscribble.usage");
         addParameter("player", true, new CommandParameterString());
         addParameter("word", false, new CommandParameterString());
+        addParameter("hosted", true, new CommandParameterBoolean());
     }
 
     @Override
     public CommandResponse execute(CommandSender sender, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
 
+        if(!(sender instanceof Player)) {
+            return new CommandResponse(ChatColor.RED + "You cannot select a word from console!");
+        }
         Player player;
         if(parameters.containsKey("player")) {
             if(Bukkit.getPlayer((String) parameters.get("player")) == null) {
@@ -40,14 +44,14 @@ public class SelectWord extends BaseCommand {
             if(sender instanceof Player && !Objects.equals(player, sender) && !sender.hasPermission("cvscribble.staff")) {
                 throw new CommandExecutionException(red + "You do not have permission to do that!");
             }
+        } else if(parameters.containsKey("hosted") && (Boolean) parameters.get("hosted")) {
+            World world = ((Player) sender).getWorld();
+            player = PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).get(0);
         } else {
-            if(!(sender instanceof Player)) {
-                return new CommandResponse(ChatColor.RED + "You cannot select a word from console!");
-            }
             player = (Player) sender;
         }
-        assert player != null;
         World world = player.getWorld();
+
         if(!PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(world, CVScribble.getInstance().getScribbleDrawingAreaRG()), world).contains(player)) {
             return new CommandResponse(red + "Someone must be in the drawing booth to select a word!");
         }
