@@ -114,9 +114,9 @@ public class CVScribbleListener implements Listener {
     @EventHandler
     public void onLocalChat(SendLocal event) {
         if(CVScribble.getInstance().getCurrentWord() == null) return;
-        if(event.getMessage().equalsIgnoreCase(CVScribble.getInstance().getCurrentWord())) {
+        String currentWord = CVScribble.getInstance().getCurrentWord();
+        if(isGuessCorrect(currentWord, event.getMessage())) {
             CVScribble.getInstance().setCurrentWord(null);
-            String currentWord = event.getMessage();
             String pName = event.getPlayer().getName();
             World pWorld = event.getPlayer().getWorld();
             String scribbleArena = CVScribble.getInstance().getScribbleArenaRG();
@@ -124,6 +124,18 @@ public class CVScribbleListener implements Listener {
             sendMessage(purple + "The word/phrase was " + gold + currentWord + purple + "! Congratulations " + gold + pName, pWorld, scribbleArena);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "cvportal trigger " + CVScribble.getInstance().getScribbleDrawingPortalExit());
         }
+    }
+
+    public boolean isGuessCorrect(String currentWord, String guess) {
+        String currentWordStripped = currentWord.replace(" ", "");
+        String guessStripped = guess.replace(" ", "");
+        if(currentWordStripped.equalsIgnoreCase(guessStripped)) return true;
+        if(currentWordStripped.charAt(currentWordStripped.length() - 1) == 's') {
+            return currentWordStripped.equalsIgnoreCase(guessStripped.concat("s"));
+        } else if(guessStripped.charAt(guessStripped.length() - 1) == 's') {
+            return currentWordStripped.concat("s").equalsIgnoreCase(guessStripped);
+        }
+        return false;
     }
 
     @EventHandler
