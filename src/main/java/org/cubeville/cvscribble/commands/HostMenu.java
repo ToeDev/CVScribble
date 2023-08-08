@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffectType;
 import org.cubeville.commons.commands.BaseCommand;
 import org.cubeville.commons.commands.CommandExecutionException;
 import org.cubeville.commons.commands.CommandParameterString;
@@ -80,6 +81,7 @@ public class HostMenu extends BaseCommand {
         }
         if(parameters.get("pagecontent").equals("playerstart")) {
             List<Player> sPlayers = PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(player.getWorld(), CVScribble.getInstance().getScribbleArenaRG()), player.getWorld());
+            sPlayers.removeIf(player1 -> player1.hasPotionEffect(PotionEffectType.INVISIBILITY));
             int totalInvs = 0;
             int t = sPlayers.size();
             int i = 0;
@@ -140,6 +142,7 @@ public class HostMenu extends BaseCommand {
             return new CommandResponse("");
         } else if(parameters.get("pagecontent").equals("playerremove")) {
             List<Player> sPlayers = PlayerUtils.getPlayersInsideRegion(BlockUtils.getWGRegion(player.getWorld(), CVScribble.getInstance().getScribbleArenaRG()), player.getWorld());
+            sPlayers.removeIf(player1 -> player1.hasPotionEffect(PotionEffectType.INVISIBILITY));
             int totalInvs = 0;
             int t = sPlayers.size();
             int i = 0;
